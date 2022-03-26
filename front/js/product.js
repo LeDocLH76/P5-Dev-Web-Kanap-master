@@ -43,15 +43,13 @@ function resteDuScript(value) {
             alert("Veuillez indiquer une couleur et une quantité valide.");
         } else {
             valideArticle(produit);
-            console.log("Quantite d'article dans le panier = " + lireLocalStorage().length);
-            
             console.log("Le produit à été ajouté au panier");
+            console.log("Quantite d'article dans le panier = " + lireLocalStorage().length);
             if(confirm(`Il y à maintenant ${lireLocalStorage().length} ${lireLocalStorage().length < 2 ? "référence" : "références"} dans le panier.\nVoulez vous aller au panier ?`)){
                 document.location.replace("cart.html");
             }else{
                 console.log("Je reste ici !")
             }
-
         }
         //Efface la quantier sur le formulaire pour eviter une double entrée.
         razQuantite();
@@ -66,22 +64,17 @@ function resteDuScript(value) {
 function compareIdLocalStorage(produit) {
     console.log("Fonction compare");
     let contenuLocalStorage = lireLocalStorage();
-    let flagPresent = false, flagCouleur = false, position = 0;
+    let flagPresentCouleur = false,  position = 0;
     //Parcours le contenu du localStorage
     for (let index = 0; index < contenuLocalStorage.length; index++) {
         const element = contenuLocalStorage[index];
-        //Si id déja present, leve le drapeau
-        if (element.id == produit.id) {
-            flagPresent = true;
-        }
-        //Si couleur identique, leve le drapeau et memorise la position dans le tableau
-        if (element.couleur == produit.couleur) {
-            flagCouleur = true;
-            position = index;
+        //Si id déja present de la meme couleur, leve le drapeau
+        if (element.id == produit.id & element.couleur == produit.couleur) {
+            flagPresentCouleur = true;
         }
     }
     //Si le produit à ajouter est déja present de la meme couleur
-    if (flagPresent & flagCouleur) {
+    if (flagPresentCouleur) {
         console.log("Mise a jour de la quantité");
         //Mettre à jour la quantité
         contenuLocalStorage[position].quantite += produit.quantite;
