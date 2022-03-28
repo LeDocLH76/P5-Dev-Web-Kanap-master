@@ -16,6 +16,7 @@ fetch(listeProduits)
     })
     ;
 
+// Tout le reste du script dans une fonction
 
 function resteDuScript(contenuMagasin) {
     //Recharge la page si le localStorage à changé alors que cette page était déja ouverte dans un autre onglet.
@@ -121,6 +122,7 @@ function resteDuScript(contenuMagasin) {
     if (localStorage.getItem("contact") == null) {
         localStorage.setItem("contact", JSON.stringify(contact));
     }
+
     // Lecture des valeurs de contact enregistrées.
     let contactStorage = JSON.parse(localStorage.getItem("contact"));
     // Pour tout les input
@@ -150,49 +152,49 @@ function resteDuScript(contenuMagasin) {
     majContactStorage(contact);
 
 
-    // Creation d'un tableau d'objets contenant les valeurs utiles pour chaques entrées input
+    // Création d'un tableau d'objets contenant les valeurs utiles pour chaques entrées input
     let tableVerification = [
-        { label: "firstName", labelMessage: "firstNameErrorMsg", regExp: "^[A-Z][a-zàâãäçèéêëîïñôöûü' -]{1,28}[a-zàâãäçèéêëîïñôöûü]$", message: "Alan => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
-        { label: "lastName", labelMessage: "lastNameErrorMsg", regExp: "^[A-Z][A-Z' -]{1,28}[A-Z]$", message: "TURING => Majuscules espaces tirets apostrophes 30c maximum", valide: false },
-        { label: "address", labelMessage: "addressErrorMsg", regExp: "^[\\w][\\wàâãäçèéêëîïñôöûü' °/\\u005C-]{1,28}[\\wàâãäçèéêëîïñôöûü]$", message: "Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
-        { label: "city", labelMessage: "cityErrorMsg", regExp: "^[A-Z][\\wàâãäçèéêëîïñôöûü' /-]{1,28}[\\wàâãäçèéêëîïñôöûü]$", message: "LONDRE => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
-        { label: "email", labelMessage: "emailErrorMsg", regExp: "^[\\w.+-]{1,64}@[\\w-]{2,252}\\.[a-zA-Z][a-zA-Z\\.]{1,5}$", message: "Veuillez entrer une adresse valide", valide: false }
+        { label: "firstName", labelMessage: "firstNameErrorMsg", regExp: "^[a-zA-Zàâãäçèéêëîïñôöûü' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
+        { label: "lastName", labelMessage: "lastNameErrorMsg", regExp: "^[a-zA-Zàâãäçèéêëîïñôöûü' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
+        { label: "address", labelMessage: "addressErrorMsg", regExp: "^[\\w][\\wàâãäçèéêëîïñôöûü' °/\\u005C-]{1,28}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
+        { label: "city", labelMessage: "cityErrorMsg", regExp: "^[\\wàâãäçèéêëîïñôöûü' /-]{1,29}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
+        { label: "email", labelMessage: "emailErrorMsg", regExp: "^[\\w.+-]{1,64}@[\\w-]{2,252}\\.[a-zA-Z][a-zA-Z\\.]{1,6}$", message: "Veuillez entrer une adresse valide", valide: false }
     ];
-    // ******************Mes regex***********************
-    // ^[A-Z][a-zàâãäçèéêëîïñôöûü' -]{1,28}[a-zàâãäçèéêëîïñôöûü]$
-    // ^[A-Z][A-Z' -]{1,28}[A-Z]$
-    // ^[\\w][\\wàâãäçèéêëîïñôöûü' °/\\-]{1,28}[\\w]$
-    // ^[A-Z][\\w' /-]{1,28}[\\w]$
 
-    // *******************Celles des autres*****************************
-    // ^[a-z]+([ \-']?[a-z]+[ \-']?[a-z]+[ \-']?)[a-z]+$"
-    // /(^[A-Za-z\u00C0-\u024F-]+? *[A-Za-z\u00C0-\u024F]) ([A-Za-z\u00C0-\u024F-\s]+?$)
-    // ^[^@\s]+@[^@\s]+\.[^@\s]+$
-    // ^[\w.+-]{1,64}@([a-zA-Z\d-]{2,252}\.[a-zA-Z\.]{2,6}){5,255}$
-    // ^((?:(?:[a-zA-Z0-9_\-\.]+)@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(?:(?:[a-zA-Z0-9\-]+\.)+))(?:[a-zA-Z]{2,4}|[0-9]{1,3})(?:\]?)(?:\s*;\s*|\s*$))*)$
-
-    // Verification de la conformité des entrées input
-    // Pour chaque objet de la table de verification
-    // Prerempli le formulaire avecles données valide déja connues
+    // Vérification de la conformité des entrées input
+    // Pour chaque objet de la table de vérification
+    // Prérempli le formulaire avec les données valides déja connues
     tableVerification.forEach(element => {
         let cible = document.getElementById(element.label);
         let messageCible = document.getElementById(element.labelMessage);
-        // Prerempli l'input en cours par la derniere donnée valide connue
-        // Et bascule le drapeau valide dans la table de verification à vrai
+        // Prérempli l'input en cours par la dernière donnée valide connue
+        // Et bascule le drapeau valide dans la table de vérification à vrai
         cible.value = contact[element.label];
         if (cible.value != "") {
             element.valide = true
         }
         // Place un ecouteur sur changement
         cible.addEventListener("change", function () {
-            // Nouvel objet RegExp suivant la valeur dans la table de verification
+            // Nouvel objet RegExp suivant la valeur dans la table de vérification
             const regExVal = new RegExp(element.regExp);
             console.log(regExVal);
             // Input valide ?
             if (cible.value.match(regExVal)) {
                 console.log("Entrée valide " + element.label);
-                // Bascule le drapeau valide dans la table de verification à vrai
+                // Bascule le drapeau valide dans la table de vérification à vrai
                 element.valide = true;
+
+                // *****************************************************************************************
+                // Formate le prénom
+                if (element.label == "firstName") {
+                    cible.value = cible.value.substr(0, 1).toUpperCase() + cible.value.substr(1, cible.value.length).toLowerCase();
+                }
+                // Formate le nom
+                if (element.label = "lastName" | element.label == "city") {
+                    cible.value = cible.value.toUpperCase();
+                }
+                // ****************************************************************************************
+
                 // Met à jour contact et contactStorage avec la nouvelle donnée valide              
                 contact[element.label] = cible.value;
                 majContactStorage(contact);
@@ -202,7 +204,7 @@ function resteDuScript(contenuMagasin) {
                 cible.value = "";
                 // Informe l'utilisateur
                 messageCible.innerHTML = element.message;
-                // Bascule le drapeau valide dans la table de verification à faux
+                // Bascule le drapeau valide dans la table de vérification à faux
                 element.valide = false;
                 console.log(`Erreur de ${element.label} !`);
             }
@@ -216,17 +218,17 @@ function resteDuScript(contenuMagasin) {
 
     // Si un panier existe dans le localStorage
     if (panier != null) {
-        // Ecoute le bouton commander et reagi au click
+        // Ecoute le bouton commander et réagi au click
         document.getElementById("order").addEventListener("click", function (e) {
             e.preventDefault();
-            // Verifie que le panier n'est pas vide
+            // Vérifie que le panier n'est pas vide
             if (panier.length != 0) {
                 // Indique bon pour commande
                 let flagCommander = true;
                 // Pour chaque input du formulaire
                 tableVerification.forEach(element => {
                     console.log(`Imput du formulaire bien rempli ? ${element.valide}`);
-                    // Verifie si valide
+                    // Vérifie si valide
                     if (element.valide == false) {
                         // Si invalide, indicateur bon pour commande = false
                         flagCommander = false;
@@ -234,27 +236,77 @@ function resteDuScript(contenuMagasin) {
                 });
                 // Si tout les input sont valides
                 if (flagCommander == true) {
-                    // alert("Passer la commande");
-                    location.replace("confirmation.html");
+                    content = preparePost(panier);
+                    // Commander et changer de page
+                    commander(content);
                 } else {
                     // Un au moins des input est invalide
-                    alert("Le formulaire n'est pas bien rempli!");
+                    alert("Le formulaire n'est pas bien rempli !");
                 }
-                console.log(`Le panier contient ${panier.length} article`);
-
-            } else {
-
+                console.log(`Le panier contient ${panier.length} ${panier.length > 1 ? "réferences" : "réference"}`);
             }
         })
     } else {
-        alert("Panier inexistant !");
+        alert("Le panier est vide !\nAllez à l'acceuil.");
     }
     console.log("Attente action utilisateur");
 
 }// ************** Fin ***********
 
-//Definitions de fonctions***************************************
+//Définitions de fonctions***************************************
 
+// Passer la commande
+function commander(content) {
+    const commandeUrl = "http://localhost:3000/api/products/order";
+    fetch(commandeUrl, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        method: 'post',
+        body: content
+    })
+        .then(function (res) {
+            if (res.ok) {
+                console.log("Reponse du serveur");
+                console.table(res);
+                return res.json();
+
+            }
+        })
+        // Recupere les données retournées par le serveur
+        .then(function (value) {
+            console.table(value);
+            // Extrait le numero de confirmation de commande
+            console.log(`L'identifiant de commande est ${value.orderId}`);
+            // Construit l'url d'appel de la page confirmation avec passage du numéro de confirmation
+            urlConfirmation = `confirmation.html?idCde=${value.orderId}`;
+            console.log(urlConfirmation);
+            // Change de page
+            location.replace(urlConfirmation);
+        })
+        .catch(function (err) {
+            console.log("Probleme " + err);
+        });
+}
+
+
+// Prépare le post
+function preparePost(panier) {
+    console.log("Fonction prepare le post")
+    let products = [];
+    panier.forEach(element => {
+        products.push(element.id);
+    });
+    console.table(products);
+    // Recupere l'objet contact dans le localStorage
+    contact = JSON.parse(localStorage.getItem("contact"));
+    console.table(contact);
+    // Prépare le Json du contact + panierId.
+    let content = JSON.stringify({ "contact": contact, "products": products });
+    // Et le retourne
+    return content;
+}
 
 // Met à jour les infos de contact dans le localStorage
 function majContactStorage(contact) {

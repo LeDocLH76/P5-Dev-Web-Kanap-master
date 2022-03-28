@@ -1,8 +1,7 @@
-// Premier test d'extraction de données sur le serveur
 
 const listeProduits = "http://localhost:3000/api/products";
 
-// Recupere l'ensemble des articles disponibles sur le serveur
+// Récupère l'ensemble des articles disponibles sur le serveur
 fetch(listeProduits)
     .then(function (res) {
         if (res.ok) {
@@ -19,8 +18,10 @@ fetch(listeProduits)
     })
     ;
 
+// ****************************** Définitions de fonctions ***********************
+
 // Parcours la liste des produits disponibles
-// et aglomere les differentes cartes article
+// et aglomere les différentes cartes article pour construire le Dom
 function aglomerationElementsDOM(produits) {
     console.log("Fonction aglomeration des éléments du Dom");
     let blocElementsDom = "";
@@ -32,7 +33,7 @@ function aglomerationElementsDOM(produits) {
     return blocElementsDom
 }
 
-// Prepare les elements du DOM pour une carte article
+// Prépare les éléments du DOM pour une carte article
 function constructionElementDOM(produit) {
     console.log("Fontion construction d'un élément du Dom");
     let element = `
