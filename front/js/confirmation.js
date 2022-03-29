@@ -11,13 +11,13 @@ if (panier == null | panier == []) {
     location.replace("index.html");
 };
 
-// Si un input du formulaire est vide => info utilisateur et retour au panier
-for (let index = 0; index < contact.length; index++) {
-    const element = contact[index];
-    if (element == "") {
+// Si l'objet contact est incomplet => info utilisateur et retour au panier
+for (const key in contact) {
+    if (contact[key] == "") {
         console.log("Il y à un problème sur le formulaire")
         alert("Le formulaire n'est pas bien rempli.");
         location.replace("cart.html");
+
     }
 }
 

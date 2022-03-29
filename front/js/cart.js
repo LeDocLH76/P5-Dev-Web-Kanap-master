@@ -184,7 +184,6 @@ function resteDuScript(contenuMagasin) {
                 // Bascule le drapeau valide dans la table de vérification à vrai
                 element.valide = true;
 
-                // *****************************************************************************************
                 // Formate le prénom => Première lettre majuscule
                 if (element.label == "firstName") {
                     cible.value = cible.value.substr(0, 1).toUpperCase() + cible.value.substr(1, cible.value.length).toLowerCase();
@@ -193,15 +192,18 @@ function resteDuScript(contenuMagasin) {
                 if (element.label == "lastName" | element.label == "city") {
                     cible.value = cible.value.toUpperCase();
                 }
-                // ****************************************************************************************
 
                 // Met à jour contact et contactStorage avec la nouvelle donnée valide              
                 contact[element.label] = cible.value;
                 majContactStorage(contact);
             } else {
                 console.log("Entrée non autorisée!");
-                // Efface l'entrée erronée 
+                // Efface l'entrée erronée sur le Dom
                 cible.value = "";
+                // Dans contact
+                contact[element.label] = cible.value;
+                // Et dans le localStorage
+                majContactStorage(contact);
                 // Informe l'utilisateur
                 messageCible.innerHTML = element.message;
                 // Bascule le drapeau valide dans la table de vérification à faux
