@@ -158,7 +158,7 @@ function resteDuScript(contenuMagasin) {
         { label: "lastName", labelMessage: "lastNameErrorMsg", regExp: "^[a-zA-Zàâãäçèéêëîïñôöûü' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
         { label: "address", labelMessage: "addressErrorMsg", regExp: "^[\\w][\\wàâãäçèéêëîïñôöûü' °/\\u005C-]{1,28}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
         { label: "city", labelMessage: "cityErrorMsg", regExp: "^[\\wàâãäçèéêëîïñôöûü' /-]{1,29}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
-        { label: "email", labelMessage: "emailErrorMsg", regExp: "^[\\w.+-]{1,64}@[\\w-]{2,252}\\.[a-zA-Z][a-zA-Z\\.]{1,6}$", message: "Veuillez entrer une adresse valide", valide: false }
+        { label: "email", labelMessage: "emailErrorMsg", regExp: "^[\\w.+-]{1,64}@[\\w-]{2,252}\\.[a-zA-Z]{1,6}\\.?[a-zA-Z]{1,6}$", message: "Veuillez entrer une adresse valide", valide: false }
     ];
 
     // Vérification de la conformité des entrées input
