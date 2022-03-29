@@ -154,10 +154,10 @@ function resteDuScript(contenuMagasin) {
 
     // Création d'un tableau d'objets contenant les valeurs utiles pour chaques entrées input
     let tableVerification = [
-        { label: "firstName", labelMessage: "firstNameErrorMsg", regExp: "^[a-zA-Zàâãäçèéêëîïñôöûü' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
-        { label: "lastName", labelMessage: "lastNameErrorMsg", regExp: "^[a-zA-Zàâãäçèéêëîïñôöûü' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
-        { label: "address", labelMessage: "addressErrorMsg", regExp: "^[\\w][\\wàâãäçèéêëîïñôöûü' °/\\u005C-]{1,28}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
-        { label: "city", labelMessage: "cityErrorMsg", regExp: "^[\\wàâãäçèéêëîïñôöûü' /-]{1,29}[\\wàâãäçèéêëîïñôöûü]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
+        { label: "firstName", labelMessage: "firstNameErrorMsg", regExp: "^[a-zA-ZàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
+        { label: "lastName", labelMessage: "lastNameErrorMsg", regExp: "^[a-zA-ZàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ' -]{1,30}$", message: "Erreur => Majuscules minuscules accents espaces tirets 30c maximum", valide: false },
+        { label: "address", labelMessage: "addressErrorMsg", regExp: "^[\\w][\\wàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ' °/\\u005C-]{1,28}[\\wàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
+        { label: "city", labelMessage: "cityErrorMsg", regExp: "^[\\wàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ' /-]{1,29}[\\wàÀâÂãÃäÄçÇèÈéÉêÊëËîÎïÏñÑôÔöÖûÛüÜ]$", message: "Erreur => Majuscules minuscules chiffres accents espaces tirets apostrophe 30c maximum", valide: false },
         { label: "email", labelMessage: "emailErrorMsg", regExp: "^[\\w.+-]{1,64}@[\\w-]{2,252}\\.[a-zA-Z]{1,6}\\.?[a-zA-Z]{1,6}$", message: "Veuillez entrer une adresse valide", valide: false }
     ];
 
@@ -185,12 +185,12 @@ function resteDuScript(contenuMagasin) {
                 element.valide = true;
 
                 // *****************************************************************************************
-                // Formate le prénom
+                // Formate le prénom => Première lettre majuscule
                 if (element.label == "firstName") {
                     cible.value = cible.value.substr(0, 1).toUpperCase() + cible.value.substr(1, cible.value.length).toLowerCase();
                 }
-                // Formate le nom
-                if (element.label = "lastName" | element.label == "city") {
+                // Formate le nom et la ville => Majuscules
+                if (element.label == "lastName" | element.label == "city") {
                     cible.value = cible.value.toUpperCase();
                 }
                 // ****************************************************************************************
