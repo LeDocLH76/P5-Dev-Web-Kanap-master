@@ -36,7 +36,7 @@ function resteDuScript(contenuMagasin) {
 
     // Si un panier existe dans le localStorage
     if (panier != null) {
-        //Pour chaque element dans le panier
+        //Pour chaque élément dans le panier
         // Construction du dom et cumul quantité et prix
         for (let index = 0; index < panier.length; index++) {
             const element = panier[index];
@@ -54,7 +54,7 @@ function resteDuScript(contenuMagasin) {
         }
     }
 
-    //Remplir le dom avec l'aglomerat d'éléments créé
+    //Remplir le dom avec l'aglomérat d'éléments créés
     let cibleDom = document.getElementById("cart__items");
     cibleDom.innerHTML = contenuPanierDom;
     // Affiche quantité et prix total
@@ -63,8 +63,9 @@ function resteDuScript(contenuMagasin) {
 
     // Si un panier existe dans le localStorage
     if (panier != null) {
-        //Pour tout les articles dans la page
-        //Ajoute un ecouteur sur un changement de quantite qui modifie le panier et le localStorage en fonction
+        // Pour tout les articles dans la page
+        // Ajoute un écouteur sur un changement de quantité qui modifie le panier et le localStorage en fonction
+        // Ajoute un écouteur sur le bouton supprimer
         for (let index = 0; index < panier.length; index++) {
             cibleDom.children[index].querySelector(".itemQuantity").addEventListener("change", function () {
                 let cibleDom = document.getElementById("cart__items");
@@ -72,7 +73,7 @@ function resteDuScript(contenuMagasin) {
                 let couleur = cibleDom.children[index].dataset.color;
                 let quantite = cibleDom.children[index].querySelector(".itemQuantity").value;
                 cibleDom.children[index].querySelector(".itemQuantity").value = quantite;
-
+                // Si la valeur quantité est valide
                 if (quantite > 0 & quantite <= 100 & quantite != null & quantite != NaN & quantite != "") {
                     quantite = parseInt(quantite);
                     //Met à jour la quantité totale sur la page                
@@ -91,11 +92,11 @@ function resteDuScript(contenuMagasin) {
                     //Modifie la quantité dans le localStorage
                     modifierQuantité(panier, id, couleur, quantite);
                 } else {
-                    // L'entrée n'est pas valide, reaffiche le contenu du panier
+                    // L'entrée n'est pas valide, réaffiche le contenu du panier
                     cibleDom.children[index].querySelector(".itemQuantity").value = panier[index].quantite;
                 }
             });
-            //Ajoute un ecouteur sur la suppression qui modifie le localStorage en fonction et recharge la page
+            //Ajoute un écouteur sur la suppression qui modifie le localStorage en fonction et recharge la page
             cibleDom.children[index].querySelector(".deleteItem").addEventListener("click", function () {
                 let cibleDom = document.getElementById("cart__items");
                 let id = cibleDom.children[index].dataset.id;
@@ -107,9 +108,9 @@ function resteDuScript(contenuMagasin) {
     }
 
 
-    // Debut du traitement du formulaire**************************
+    // Début du traitement du formulaire**************************
 
-    // Creation d'un objet contact vide
+    // Création d'un objet contact vide
     let contact = {
         firstName: "",
         lastName: "",
@@ -126,8 +127,8 @@ function resteDuScript(contenuMagasin) {
     // Lecture des valeurs de contact enregistrées.
     let contactStorage = JSON.parse(localStorage.getItem("contact"));
     // Pour tout les input
-    // Si une valeur valide est presente dans le localStorage
-    // Rempli l'objet contact avec les valeurs presentes
+    // Si une valeur valide est présente dans le localStorage
+    // Rempli l'objet contact avec les valeurs présentes
     if (contactStorage.firstName != "") {
         console.log("Un prénom existe");
         contact.firstName = contactStorage.firstName
@@ -163,7 +164,6 @@ function resteDuScript(contenuMagasin) {
 
     // Vérification de la conformité des entrées input
     // Pour chaque objet de la table de vérification
-    // Prérempli le formulaire avec les données valides déja connues
     tableVerification.forEach(element => {
         let cible = document.getElementById(element.label);
         let messageCible = document.getElementById(element.labelMessage);
@@ -173,8 +173,12 @@ function resteDuScript(contenuMagasin) {
         if (cible.value != "") {
             element.valide = true
         }
-        // Place un ecouteur sur changement
-        cible.addEventListener("change", function () {
+        // Place un écouteur sur changement de input en cours
+        // Vérifie la validité des entrées
+        // Reformate l'entrée
+        // Met à jour si ok
+        cible.addEventListener("change", function (e) {
+            e.preventDefault();
             // Nouvel objet RegExp suivant la valeur dans la table de vérification
             const regExVal = new RegExp(element.regExp);
             console.log(regExVal);
@@ -183,7 +187,6 @@ function resteDuScript(contenuMagasin) {
                 console.log("Entrée valide " + element.label);
                 // Bascule le drapeau valide dans la table de vérification à vrai
                 element.valide = true;
-
                 // Formate le prénom => Première lettre majuscule
                 if (element.label == "firstName") {
                     cible.value = cible.value.substr(0, 1).toUpperCase() + cible.value.substr(1, cible.value.length).toLowerCase();
@@ -192,7 +195,6 @@ function resteDuScript(contenuMagasin) {
                 if (element.label == "lastName" | element.label == "city") {
                     cible.value = cible.value.toUpperCase();
                 }
-
                 // Met à jour contact et contactStorage avec la nouvelle donnée valide              
                 contact[element.label] = cible.value;
                 majContactStorage(contact);
@@ -212,7 +214,7 @@ function resteDuScript(contenuMagasin) {
             }
 
         });
-        // efface les message d'erreur quand l'utilisateur clique dans l'input
+        // Efface le message d'erreur quand l'utilisateur clique dans l'input
         cible.addEventListener("click", function () {
             messageCible.innerHTML = "";
         });
@@ -259,6 +261,7 @@ function resteDuScript(contenuMagasin) {
 
 // Passer la commande
 function commander(content) {
+    console.log("Fonction commander")
     const commandeUrl = "http://localhost:3000/api/products/order";
     fetch(commandeUrl, {
         headers: {
@@ -276,10 +279,10 @@ function commander(content) {
 
             }
         })
-        // Recupere les données retournées par le serveur
+        // Récupère les données retournées par le serveur
         .then(function (value) {
             console.table(value);
-            // Extrait le numero de confirmation de commande
+            // Extrait le numéro de confirmation de commande
             console.log(`L'identifiant de commande est ${value.orderId}`);
             // Construit l'url d'appel de la page confirmation avec passage du numéro de confirmation
             urlConfirmation = `confirmation.html?idCde=${value.orderId}`;
@@ -295,13 +298,14 @@ function commander(content) {
 
 // Prépare le post
 function preparePost(panier) {
-    console.log("Fonction prepare le post")
+    console.log("Fonction prépare le post")
+    // Prépare un tableau d'id pour le serveur
     let products = [];
     panier.forEach(element => {
         products.push(element.id);
     });
     console.table(products);
-    // Recupere l'objet contact dans le localStorage
+    // Récupere l'objet contact dans le localStorage
     contact = JSON.parse(localStorage.getItem("contact"));
     console.table(contact);
     // Prépare le Json du contact + panierId.
@@ -317,7 +321,7 @@ function majContactStorage(contact) {
     localStorage.setItem("contact", contactJson);
 }
 
-//Parcours le tableau des articles du serveur et retourne le prix correspondant à l'id passé en parametre
+//Parcours le tableau des articles du serveur et retourne le prix correspondant à l'id passé en paramètre
 function trouvePrixArticle(contenuMagasin, id) {
     console.log("Fonction trouve le prix d'un article");
     for (let index = 0; index < contenuMagasin.length; index++) {
@@ -337,7 +341,7 @@ function majPrixDom(prixTotal) {
 
 // Met à jour la quantité sur la page
 function majQuantiteDom(quantiteTotale) {
-    console.log("fonction met la quantité à jour sur la page");
+    console.log("Fonction met la quantité à jour sur la page");
     cibleDom = document.getElementById("totalQuantity");
     cibleDom.innerHTML = quantiteTotale;
 
@@ -349,7 +353,7 @@ function retirerLocalStorage(panier, id, couleur) {
     for (let index = 0; index < panier.length; index++) {
         const element = panier[index];
         if (element.id == id & element.couleur == couleur) {
-            //Si present, efface cartAndFormContainer de l'adresse de la page
+            //Si présent, éfface cartAndFormContainer de l'adresse de la page
             window.location.hash = "";
             panier.splice(index, 1);
             majLocalStorage(panier);

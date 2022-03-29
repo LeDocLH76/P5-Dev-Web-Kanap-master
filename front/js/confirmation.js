@@ -1,4 +1,4 @@
-// Recuperer le panier et contact dans le locaStorage.
+// Récuperer le panier et contact dans le locaStorage.
 panier = JSON.parse(localStorage.getItem("panierKanap"));
 console.table(panier);
 contact = JSON.parse(localStorage.getItem("contact"));
@@ -17,20 +17,19 @@ for (const key in contact) {
         console.log("Il y à un problème sur le formulaire")
         alert("Le formulaire n'est pas bien rempli.");
         location.replace("cart.html");
-
     }
 }
 
 let pageCourante = window.location.href;
 let url = new URL(pageCourante);
-// Recupere la valeur du parametre idCde passé par la page d'appel
+// Récupere la valeur du paramètre idCde passé par la page d'appel
 let orderId = url.searchParams.get("idCde");
 console.log(`Le numero de commande est ${orderId}`);
 cible = document.getElementById("orderId");
-// Afficher le numero de confirm.
-cible.innerHTML = orderId;
 // Vérifie que l'utilisateur a bien un numéro de confirmation
 if (orderId != null) {
+    // Afficher le numero de confirm.
+    cible.innerHTML = orderId;
     // Merci utilisateur, numero volatile, email envoyé.
     alert(`
             Nous vous remercions de votre commande.
